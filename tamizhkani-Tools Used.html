@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tamizh Kani - My Website Reference Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Poppins',sans-serif;background:#0a0a0a;color:#fff;padding:30px 4%;}
+  h1{font-size:2rem;font-weight:900;background:linear-gradient(135deg,#FFD700,#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px;}
+  .subtitle{color:#666;font-size:0.85rem;margin-bottom:30px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;}
+  .card{background:#111;border-radius:16px;padding:22px;border:1px solid #222;}
+  .card-title{font-size:0.75rem;letter-spacing:2px;font-weight:700;margin-bottom:14px;padding:5px 12px;border-radius:20px;display:inline-block;}
+  .blue{background:rgba(79,142,247,0.15);color:#4f8ef7;}
+  .green{background:rgba(0,200,150,0.15);color:#00c896;}
+  .gold{background:rgba(255,215,0,0.15);color:#FFD700;}
+  .purple{background:rgba(168,85,247,0.15);color:#a855f7;}
+  .red{background:rgba(255,107,107,0.15);color:#ff6b6b;}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1a1a1a;}
+  .row:last-child{border-bottom:none;}
+  .row .label{color:#888;font-size:0.82rem;}
+  .row .value{font-size:0.88rem;font-weight:600;color:#fff;text-align:right;}
+  .row .value a{color:#4f8ef7;text-decoration:none;}
+  .row .value.green-val{color:#00c896;}
+  .row .value.gold-val{color:#FFD700;}
+  .step{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
+  .num{width:26px;height:26px;min-width:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;background:rgba(79,142,247,0.2);color:#4f8ef7;border:1px solid #4f8ef7;}
+  .step-text h4{font-size:0.88rem;font-weight:600;margin-bottom:2px;}
+  .step-text p{font-size:0.78rem;color:#888;}
+  .code{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:10px 14px;font-family:monospace;font-size:0.8rem;color:#00c896;margin:8px 0;word-break:break-all;}
+  .tip{background:rgba(0,200,150,0.07);border:1px solid rgba(0,200,150,0.2);border-radius:8px;padding:10px 14px;margin-top:10px;}
+  .tip p{color:#00c896;font-size:0.8rem;}
+  .warn{background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.2);border-radius:8px;padding:10px 14px;margin-top:10px;}
+  .warn p{color:#FFD700;font-size:0.8rem;}
+  .checklist{list-style:none;margin-top:5px;}
+  .checklist li{padding:7px 0;border-bottom:1px solid #1a1a1a;font-size:0.85rem;color:#ccc;}
+  .checklist li::before{content:'✅ ';}
+  .checklist li.pending::before{content:'⏳ ';}
+  .badge-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .badge{background:#1a1a1a;border:1px solid #333;padding:4px 12px;border-radius:20px;font-size:0.78rem;color:#ccc;}
+  hr{border:none;border-top:1px solid #1a1a1a;margin:12px 0;}
+  .big{font-size:1.1rem;font-weight:700;}
+  .print-btn{position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;border:none;padding:12px 24px;border-radius:50px;font-weight:700;font-size:0.9rem;cursor:pointer;font-family:'Poppins',sans-serif;box-shadow:0 5px 20px rgba(255,215,0,0.3);}
+</style>
+</head>
+<body>
+
+<h1>தமிழ் கணி — Tamizh Kani</h1>
+<p class="subtitle">📋 My Complete Website Reference Sheet — Everything in one place!</p>
+
+<div class="grid">
+
+  <!-- WEBSITE & DOMAIN -->
+  <div class="card">
+    <span class="card-title blue">🌐 WEBSITE & DOMAIN</span>
+    <div class="row"><span class="label">Live Website</span><span class="value"><a href="https://tamizhkani.com" target="_blank">tamizhkani.com</a></span></div>
+    <div class="row"><span class="label">Netlify URL</span><span class="value"><a href="https://heartfelt-chebakia-32faf2.netlify.app" target="_blank">heartfelt-chebakia-32faf2.netlify.app</a></span></div>
+    <div class="row"><span class="label">Domain Registrar</span><span class="value">GoDaddy</span></div>
+    <div class="row"><span class="label">Domain Cost</span><span class="value gold-val">~₹1000/year</span></div>
+    <div class="row"><span class="label">Hosting</span><span class="value green-val">Netlify (FREE)</span></div>
+    <div class="row"><span class="label">SSL Certificate</span><span class="value green-val">✅ Active (Free)</span></div>
+    <div class="row"><span class="label">Domain Expires</span><span class="value">March 2027</span></div>
+  </div>
+
+  <!-- LOGIN DETAILS -->
+  <div class="card">
+    <span class="card-title gold">🔑 LOGIN LINKS</span>
+    <div class="row"><span class="label">GoDaddy</span><span class="value"><a href="https://dcc.godaddy.com" target="_blank">dcc.godaddy.com</a></span></div>
+    <div class="row"><span class="label">Netlify</span><span class="value"><a href="https://app.netlify.com" target="_blank">app.netlify.com</a></span></div>
+    <div class="row"><span class="label">GitHub</span><span class="value"><a href="https://github.com/PrabuShiva" target="_blank">github.com/PrabuShiva</a></span></div>
+    <div class="row"><span class="label">Professional Email</span><span class="value"><a href="https://secureserver.titan.email/mail" target="_blank">secureserver.titan.email</a></span></div>
+    <div class="row"><span class="label">Email Address</span><span class="value gold-val">hello@tamizhkani.com</span></div>
+    <div class="row"><span class="label">Netlify Project ID</span><span class="value" style="font-size:0.75rem;">heartfelt-chebakia-32faf2</span></div>
+    <div class="tip"><p>💡 Use Titan app on mobile to check emails from hello@tamizhkani.com</p></div>
+  </div>
+
+  <!-- DNS RECORDS -->
+  <div class="card">
+    <span class="card-title purple">⚙️ GoDaddy DNS RECORDS</span>
+    <p style="color:#888;font-size:0.8rem;margin-bottom:12px;">These DNS records connect tamizhkani.com to Netlify:</p>
+    <div class="row"><span class="label">Type</span><span class="value">Name → Value</span></div>
+    <div class="row"><span class="label">A Record</span><span class="value green-val">@ → 75.2.60.5</span></div>
+    <div class="row"><span class="label">CNAME Record</span><span class="value green-val" style="font-size:0.78rem;">www → heartfelt-chebakia-32faf2.netlify.app</span></div>
+    <div class="row"><span class="label">NS Record</span><span class="value" style="font-size:0.78rem;">ns71.domaincontrol.com</span></div>
+    <div class="row"><span class="label">NS Record</span><span class="value" style="font-size:0.78rem;">ns72.domaincontrol.com</span></div>
+    <div class="warn"><p>⚠️ Never delete NS records! Only edit A and CNAME records if needed.</p></div>
+  </div>
+
+  <!-- EMAIL SETUP -->
+  <div class="card">
+    <span class="card-title green">📧 EMAIL SETUP</span>
+    <div class="row"><span class="label">Email</span><span class="value gold-val">hello@tamizhkani.com</span></div>
+    <div class="row"><span class="label">Provider</span><span class="value">Titan Mail (via GoDaddy)</span></div>
+    <div class="row"><span class="label">Web Access</span><span class="value"><a href="https://secureserver.titan.email/mail" target="_blank">secureserver.titan.email</a></span></div>
+    <div class="row"><span class="label">Mobile App</span><span class="value">Titan Mail App</span></div>
+    <div class="row"><span class="label">Email Plan</span><span class="value">Professional Email Pro Light</span></div>
+    <div class="row"><span class="label">Plan Expires</span><span class="value">6 March 2027</span></div>
+    <div class="tip"><p>💡 Contact form submissions from tamizhkani.com are sent to this inbox via Netlify Forms!</p></div>
+  </div>
+
+  <!-- GITHUB -->
+  <div class="card">
+    <span class="card-title gold">🐙 GITHUB SETUP</span>
+    <div class="row"><span class="label">GitHub Username</span><span class="value"><a href="https://github.com/PrabuShiva" target="_blank">PrabuShiva</a></span></div>
+    <div class="row"><span class="label">Assets Repo</span><span class="value"><a href="https://github.com/PrabuShiva/tamizhkani-assets" target="_blank">tamizhkani-assets</a></span></div>
+    <div class="row"><span class="label">Founder Photo</span><span class="value" style="font-size:0.72rem;color:#00c896;">raw.githubusercontent.com/.../FounderOfTamizhKani.jpg</span></div>
+    <hr/>
+    <p style="color:#888;font-size:0.8rem;margin-bottom:8px;">Future use — upload software here:</p>
+    <div class="badge-row">
+      <span class="badge">🌐 Tamil Browser .exe</span>
+      <span class="badge">⚙️ Tamili Language installer</span>
+      <span class="badge">📦 GitHub Releases</span>
+    </div>
+  </div>
+
+  <!-- CONTACT FORM -->
+  <div class="card">
+    <span class="card-title purple">📝 CONTACT FORM</span>
+    <div class="row"><span class="label">Form Provider</span><span class="value green-val">Netlify Forms (Free)</span></div>
+    <div class="row"><span class="label">View Submissions</span><span class="value"><a href="https://app.netlify.com/projects/heartfelt-chebakia-32faf2/forms" target="_blank">Netlify → Forms</a></span></div>
+    <div class="row"><span class="label">Form Status</span><span class="value green-val">✅ Working</span></div>
+    <div class="row"><span class="label">Email Notification</span><span class="value green-val">✅ hello@tamizhkani.com</span></div>
+    <hr/>
+    <p style="color:#888;font-size:0.8rem;margin-bottom:8px;">HTML code for Netlify form:</p>
+    <div class="code">&lt;form name="contact" netlify&gt;<br>&nbsp;&lt;input type="hidden" name="form-name" value="contact"/&gt;<br>&nbsp;...fields...<br>&lt;/form&gt;</div>
+  </div>
+
+  <!-- HOW TO UPDATE WEBSITE -->
+  <div class="card">
+    <span class="card-title blue">🔄 HOW TO UPDATE WEBSITE</span>
+    <p style="color:#888;font-size:0.8rem;margin-bottom:12px;">When you want to change something on the website:</p>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="step-text"><h4>Edit index.html</h4><p>Make changes to your HTML file</p></div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="step-text"><h4>Put in folder</h4><p>Place updated index.html inside "tamizhkani" folder</p></div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="step-text"><h4>Go to Netlify Deploys</h4><p>app.netlify.com → your project → Deploys</p></div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="step-text"><h4>Drag & Drop folder</h4><p>Drag the tamizhkani folder into Netlify deploy area</p></div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="step-text"><h4>Done! 🎉</h4><p>Changes go live in ~30 seconds</p></div>
+    </div>
+  </div>
+
+  <!-- COMPLETE CHECKLIST -->
+  <div class="card">
+    <span class="card-title green">✅ COMPLETED CHECKLIST</span>
+    <ul class="checklist">
+      <li>Website built with HTML/CSS (Dark gold theme)</li>
+      <li>Domain bought — tamizhkani.com (GoDaddy)</li>
+      <li>Hosted on Netlify for FREE</li>
+      <li>SSL Certificate active (🔒 https://)</li>
+      <li>DNS A record added (75.2.60.5)</li>
+      <li>DNS CNAME record added (www)</li>
+      <li>Professional email — hello@tamizhkani.com</li>
+      <li>Email working on mobile (Titan app)</li>
+      <li>Contact form working (Netlify Forms)</li>
+      <li>Founder photo added (GitHub hosted)</li>
+      <li>GitHub account set up (PrabuShiva)</li>
+      <li class="pending">Tamili Programming Language (In progress)</li>
+      <li class="pending">Tamil Browser (In progress)</li>
+      <li class="pending">Google AdSense (Coming soon)</li>
+    </ul>
+  </div>
+
+  <!-- PRODUCTS PLANNED -->
+  <div class="card">
+    <span class="card-title gold">🚀 PRODUCTS ROADMAP</span>
+    <div class="row"><span class="label">🌐 Tamil Browser</span><span class="value" style="color:#FFD700;">In Development</span></div>
+    <div class="row"><span class="label">⚙️ Tamili Language</span><span class="value" style="color:#FFD700;">In Development</span></div>
+    <div class="row"><span class="label">📝 Kani Code Editor</span><span class="value" style="color:#888;">Planned</span></div>
+    <div class="row"><span class="label">🔍 Tamizh Search</span><span class="value" style="color:#888;">Planned</span></div>
+    <div class="row"><span class="label">🤖 Kani AI Assistant</span><span class="value" style="color:#888;">Planned</span></div>
+    <hr/>
+    <p style="color:#888;font-size:0.8rem;margin-bottom:6px;">When product is ready:</p>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="step-text"><h4>Upload to GitHub Releases</h4><p>github.com/PrabuShiva → New Release</p></div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="step-text"><h4>Update download button on website</h4><p>Link the button to GitHub release URL</p></div>
+    </div>
+  </div>
+
+  <!-- COST SUMMARY -->
+  <div class="card">
+    <span class="card-title green">💰 YEARLY COST SUMMARY</span>
+    <div class="row"><span class="label">tamizhkani.com domain</span><span class="value gold-val">~₹1000/year</span></div>
+    <div class="row"><span class="label">Netlify Hosting</span><span class="value green-val">FREE ✅</span></div>
+    <div class="row"><span class="label">SSL Certificate</span><span class="value green-val">FREE ✅</span></div>
+    <div class="row"><span class="label">hello@tamizhkani.com</span><span class="value green-val">FREE (till 2027) ✅</span></div>
+    <div class="row"><span class="label">GitHub</span><span class="value green-val">FREE ✅</span></div>
+    <div class="row"><span class="label">Netlify Forms</span><span class="value green-val">FREE ✅</span></div>
+    <hr/>
+    <div class="row"><span class="label big">Total Per Year</span><span class="value big gold-val">~₹1000 only! 🎉</span></div>
+    <div class="tip" style="margin-top:12px;"><p>🎊 Full professional website with email, SSL & forms for just ₹1000/year!</p></div>
+  </div>
+
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+
+</body>
+</html>
