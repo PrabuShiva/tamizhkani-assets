@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>How to Build & Host a Website</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Poppins',sans-serif;background:#0f0f1a;color:#fff;overflow:hidden;}
+  .slide{display:none;width:100vw;height:100vh;padding:50px 7%;flex-direction:column;justify-content:center;animation:fadeIn 0.5s ease;}
+  .slide.active{display:flex;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+  /* COLORS */
+  :root{--blue:#4f8ef7;--green:#00c896;--gold:#FFD700;--purple:#a855f7;--red:#ff6b6b;}
+
+  /* NAV */
+  .nav{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:999;background:rgba(255,255,255,0.05);padding:12px 20px;border-radius:50px;backdrop-filter:blur(10px);}
+  .nav button{background:rgba(255,255,255,0.1);border:none;color:#fff;padding:8px 18px;border-radius:25px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:0.85rem;transition:all 0.3s;}
+  .nav button:hover,.nav button.active{background:var(--blue);color:#fff;}
+  .slide-count{position:fixed;top:20px;right:30px;color:#666;font-size:0.85rem;}
+
+  /* PROGRESS */
+  .progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width 0.3s;}
+
+  /* SLIDE STYLES */
+  .badge{display:inline-block;padding:5px 16px;border-radius:20px;font-size:0.75rem;letter-spacing:2px;margin-bottom:15px;font-weight:600;}
+  .badge.blue{background:rgba(79,142,247,0.15);color:var(--blue);border:1px solid rgba(79,142,247,0.3);}
+  .badge.green{background:rgba(0,200,150,0.15);color:var(--green);border:1px solid rgba(0,200,150,0.3);}
+  .badge.gold{background:rgba(255,215,0,0.15);color:var(--gold);border:1px solid rgba(255,215,0,0.3);}
+  .badge.purple{background:rgba(168,85,247,0.15);color:var(--purple);border:1px solid rgba(168,85,247,0.3);}
+  .badge.red{background:rgba(255,107,107,0.15);color:var(--red);border:1px solid rgba(255,107,107,0.3);}
+
+  h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.15;margin-bottom:15px;}
+  h2{font-size:clamp(1.5rem,3vw,2.5rem);font-weight:800;margin-bottom:15px;}
+  h3{font-size:1.2rem;font-weight:700;margin-bottom:8px;}
+  p{color:#aaa;line-height:1.8;font-size:0.95rem;}
+  .highlight{color:#fff;}
+
+  /* GRADIENT TEXTS */
+  .grad-blue{background:linear-gradient(135deg,#4f8ef7,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .grad-green{background:linear-gradient(135deg,#00c896,#4f8ef7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .grad-gold{background:linear-gradient(135deg,#FFD700,#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+  /* GRID */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-top:20px;}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:20px;}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:15px;margin-top:20px;}
+
+  /* CARDS */
+  .card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:25px;transition:all 0.3s;}
+  .card:hover{border-color:rgba(79,142,247,0.3);transform:translateY(-3px);}
+  .card .icon{font-size:2rem;margin-bottom:12px;}
+  .card.green-card{border-color:rgba(0,200,150,0.2);}
+  .card.blue-card{border-color:rgba(79,142,247,0.2);}
+  .card.gold-card{border-color:rgba(255,215,0,0.2);}
+  .card.purple-card{border-color:rgba(168,85,247,0.2);}
+
+  /* STEPS */
+  .step{display:flex;gap:20px;align-items:flex-start;margin-bottom:20px;}
+  .step-num{width:40px;height:40px;min-width:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;}
+  .step-num.blue{background:rgba(79,142,247,0.2);color:var(--blue);border:1px solid var(--blue);}
+  .step-num.green{background:rgba(0,200,150,0.2);color:var(--green);border:1px solid var(--green);}
+  .step-num.gold{background:rgba(255,215,0,0.2);color:var(--gold);border:1px solid var(--gold);}
+  .step h3{margin-bottom:4px;}
+  .step p{font-size:0.88rem;}
+
+  /* CODE */
+  .code{background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:15px 20px;font-family:monospace;font-size:0.85rem;color:#00c896;margin:10px 0;}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;margin-top:15px;}
+  th{background:rgba(79,142,247,0.15);color:var(--blue);padding:12px 15px;text-align:left;font-size:0.85rem;}
+  td{padding:10px 15px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.88rem;color:#ccc;}
+  tr:hover td{background:rgba(255,255,255,0.02);}
+
+  /* TITLE SLIDE */
+  .title-slide{background:radial-gradient(ellipse at 30% 50%,rgba(79,142,247,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(168,85,247,0.1) 0%,transparent 60%);}
+  .subtitle{font-size:1.1rem;color:#888;margin-bottom:30px;}
+  .tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+  .tag{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:5px 14px;border-radius:20px;font-size:0.8rem;color:#ccc;}
+
+  /* TIP BOX */
+  .tip{background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:15px 20px;margin-top:15px;}
+  .tip p{color:#00c896;font-size:0.88rem;}
+
+  /* WARNING BOX */
+  .warn{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:10px;padding:15px 20px;margin-top:15px;}
+  .warn p{color:#FFD700;font-size:0.88rem;}
+
+  /* FINAL SLIDE */
+  .final-bg{background:radial-gradient(ellipse at center,rgba(79,142,247,0.12) 0%,transparent 70%);}
+  .checklist{list-style:none;margin-top:15px;}
+  .checklist li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.9rem;color:#ccc;}
+  .checklist li::before{content:'✅ ';margin-right:8px;}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="slide-count" id="slideCount">1 / 12</div>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide active title-slide" id="s1">
+  <div class="badge blue">COMPLETE GUIDE</div>
+  <h1>How to Build &<br><span class="grad-blue">Host a Website</span></h1>
+  <p class="subtitle">A step-by-step guide from scratch to live — for beginners</p>
+  <div class="tags">
+    <span class="tag">🌐 Domain</span>
+    <span class="tag">🚀 Hosting</span>
+    <span class="tag">💻 HTML/CSS</span>
+    <span class="tag">🔒 SSL</span>
+    <span class="tag">📧 Email</span>
+    <span class="tag">📝 Forms</span>
+    <span class="tag">💰 Free Tools</span>
+  </div>
+  <div class="tip" style="margin-top:30px;"><p>💡 Real-world example: tamizhkani.com — built and hosted completely for free (except domain ~₹1000/year)</p></div>
+</div>
+
+<!-- SLIDE 2: OVERVIEW -->
+<div class="slide" id="s2">
+  <div class="badge green">OVERVIEW</div>
+  <h2>What You Need to <span class="grad-green">Get Started</span></h2>
+  <div class="grid-2">
+    <div>
+      <div class="step">
+        <div class="step-num blue">1</div>
+        <div><h3>Build your website</h3><p>Write HTML, CSS & JavaScript code — or use a website builder</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num blue">2</div>
+        <div><h3>Get a Domain Name</h3><p>Buy yourwebsite.com from a registrar like GoDaddy or Namecheap</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num blue">3</div>
+        <div><h3>Host your website</h3><p>Upload your files to a hosting platform like Netlify (free!)</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num blue">4</div>
+        <div><h3>Connect Domain & Host</h3><p>Point your domain DNS to your hosting so visitors reach your site</p></div>
+      </div>
+    </div>
+    <div class="card blue-card">
+      <div class="icon">💡</div>
+      <h3>Key Concept</h3>
+      <p style="margin-bottom:15px;">Think of it like a house:</p>
+      <table>
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Domain</td><td>Your house address</td></tr>
+        <tr><td>Hosting</td><td>The land/house itself</td></tr>
+        <tr><td>HTML File</td><td>Your furniture & walls</td></tr>
+        <tr><td>DNS</td><td>The map to your house</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: BUILD WEBSITE -->
+<div class="slide" id="s3">
+  <div class="badge blue">STEP 1</div>
+  <h2>Build Your <span class="grad-blue">Website</span></h2>
+  <div class="grid-2">
+    <div>
+      <h3 style="color:#aaa;margin-bottom:15px;">Option A — Code it yourself (HTML/CSS)</h3>
+      <div class="code">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&nbsp;&nbsp;&lt;head&gt;&lt;title&gt;My Website&lt;/title&gt;&lt;/head&gt;<br>&nbsp;&nbsp;&lt;body&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Hello World!&lt;/h1&gt;<br>&nbsp;&nbsp;&lt;/body&gt;<br>&lt;/html&gt;</div>
+      <p>Save as <strong style="color:#fff;">index.html</strong> — this is your website file!</p>
+      <div class="tip" style="margin-top:15px;"><p>💡 You can use AI (like Claude!) to build your entire website just by describing what you want!</p></div>
+    </div>
+    <div>
+      <h3 style="color:#aaa;margin-bottom:15px;">Option B — No-code builders</h3>
+      <div class="grid-2" style="margin-top:0;">
+        <div class="card">
+          <div class="icon">🎨</div>
+          <h3>Wix</h3>
+          <p>Drag & drop. Free plan available.</p>
+        </div>
+        <div class="card">
+          <div class="icon">⬛</div>
+          <h3>Squarespace</h3>
+          <p>Beautiful templates. Paid only.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🔵</div>
+          <h3>WordPress</h3>
+          <p>Most popular. Very flexible.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🤖</div>
+          <h3>Claude AI</h3>
+          <p>Ask AI to build your site in seconds!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: DOMAIN -->
+<div class="slide" id="s4">
+  <div class="badge gold">STEP 2</div>
+  <h2>Get a <span class="grad-gold">Domain Name</span></h2>
+  <div class="grid-2">
+    <div>
+      <div class="step">
+        <div class="step-num gold">1</div>
+        <div><h3>Go to a Domain Registrar</h3><p>GoDaddy, Namecheap, or Google Domains</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num gold">2</div>
+        <div><h3>Search your domain name</h3><p>E.g. tamizhkani.com — check if it's available</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num gold">3</div>
+        <div><h3>Add to cart & pay</h3><p>Use debit/credit card or PayPal. ~₹1000/year for .com</p></div>
+      </div>
+      <div class="warn"><p>⚠️ Uncheck add-ons like Premium DNS, Web Hosting — you don't need them if using Netlify!</p></div>
+    </div>
+    <div class="card gold-card">
+      <h3 style="color:var(--gold);margin-bottom:15px;">Domain Extensions & Prices</h3>
+      <table>
+        <tr><th>Extension</th><th>Best For</th><th>Price/yr</th></tr>
+        <tr><td>.com</td><td>Any website</td><td>~₹1000</td></tr>
+        <tr><td>.in</td><td>India-based</td><td>~₹500</td></tr>
+        <tr><td>.tech</td><td>Tech products</td><td>~₹800</td></tr>
+        <tr><td>.org</td><td>Non-profit</td><td>~₹900</td></tr>
+      </table>
+      <div class="tip" style="margin-top:15px;"><p>💡 For Indian payment: Use HDFC/SBI debit card with international transactions enabled, or PayPal linked to your bank account</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: HOSTING -->
+<div class="slide" id="s5">
+  <div class="badge green">STEP 3</div>
+  <h2>Host Your Website with <span class="grad-green">Netlify (Free!)</span></h2>
+  <div class="grid-2">
+    <div>
+      <div class="step">
+        <div class="step-num green">1</div>
+        <div><h3>Sign up at netlify.com</h3><p>Use your Gmail — no credit card needed</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num green">2</div>
+        <div><h3>Create a folder</h3><p>Put your index.html inside a folder (e.g. "mywebsite")</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num green">3</div>
+        <div><h3>Drag & Drop to deploy</h3><p>Drag the entire folder into Netlify's deploy area</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num green">4</div>
+        <div><h3>Get your live link!</h3><p>Netlify gives you a free link like random-name.netlify.app</p></div>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:#aaa;margin-bottom:15px;">Hosting Options Comparison</h3>
+      <table>
+        <tr><th>Platform</th><th>Price</th><th>Best For</th></tr>
+        <tr><td>🚀 Netlify</td><td>FREE</td><td>Static sites ✅</td></tr>
+        <tr><td>▲ Vercel</td><td>FREE</td><td>React apps ✅</td></tr>
+        <tr><td>🐙 GitHub Pages</td><td>FREE</td><td>Developers ✅</td></tr>
+        <tr><td>🌐 Hostinger</td><td>₹150/mo</td><td>PHP sites</td></tr>
+        <tr><td>🔵 Bluehost</td><td>₹250/mo</td><td>WordPress</td></tr>
+      </table>
+      <div class="tip" style="margin-top:15px;"><p>💡 Netlify is the best FREE option for HTML/CSS websites. It also gives you free SSL (🔒 padlock) automatically!</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: DNS -->
+<div class="slide" id="s6">
+  <div class="badge purple">STEP 4</div>
+  <h2>Connect Domain to <span class="grad-blue">Netlify</span></h2>
+  <div class="grid-2">
+    <div>
+      <h3 style="color:#aaa;margin-bottom:15px;">In Netlify:</h3>
+      <div class="step">
+        <div class="step-num blue">1</div>
+        <div><h3>Go to Domain Management</h3><p>Site Settings → Domain Management → Add Custom Domain</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num blue">2</div>
+        <div><h3>Click "Pending DNS verification"</h3><p>Netlify shows you the IP address: <strong style="color:#00c896;">75.2.60.5</strong></p></div>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:#aaa;margin-bottom:15px;">In GoDaddy/Namecheap:</h3>
+      <div class="step">
+        <div class="step-num gold">3</div>
+        <div><h3>Go to DNS Records</h3><p>Find the DNS Management page for your domain</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num gold">4</div>
+        <div><h3>Add these 2 records:</h3>
+          <div class="code">Type: A | Name: @ | Value: 75.2.60.5<br>Type: CNAME | Name: www | Value: your-site.netlify.app</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num gold">5</div>
+        <div><h3>Wait 15 mins – 24 hours</h3><p>Your domain will point to your Netlify website! 🎉</p></div>
+      </div>
+      <div class="warn"><p>⚠️ Delete any "Parked" A records in GoDaddy before adding Netlify's A record!</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: SSL -->
+<div class="slide" id="s7">
+  <div class="badge green">STEP 5</div>
+  <h2>Enable Free <span class="grad-green">SSL Certificate 🔒</span></h2>
+  <div class="grid-2">
+    <div>
+      <p style="margin-bottom:20px;">SSL makes your website secure (https://) and shows the 🔒 padlock in the browser. Netlify gives it for FREE!</p>
+      <div class="step">
+        <div class="step-num green">1</div>
+        <div><h3>Go to Domain Management in Netlify</h3><p>Scroll down to HTTPS section</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num green">2</div>
+        <div><h3>Click "Verify DNS Configuration"</h3><p>Netlify checks if your domain is pointing correctly</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num green">3</div>
+        <div><h3>Click "Provision Certificate"</h3><p>Netlify installs a free Let's Encrypt SSL certificate</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num green">4</div>
+        <div><h3>Wait 5–15 minutes</h3><p>Your site is now secure with https:// ✅</p></div>
+      </div>
+    </div>
+    <div class="card green-card">
+      <div class="icon">🔒</div>
+      <h3>Why SSL is Important</h3>
+      <table style="margin-top:15px;">
+        <tr><th>Without SSL</th><th>With SSL</th></tr>
+        <tr><td>❌ http://</td><td>✅ https://</td></tr>
+        <tr><td>❌ No padlock</td><td>✅ 🔒 Padlock shown</td></tr>
+        <tr><td>❌ Browser warning</td><td>✅ Trusted site</td></tr>
+        <tr><td>❌ Bad for SEO</td><td>✅ Good for Google</td></tr>
+        <tr><td>❌ Visitors scared</td><td>✅ Visitors trust you</td></tr>
+      </table>
+      <div class="tip" style="margin-top:15px;"><p>💡 Netlify SSL is completely FREE — no need to pay for SSL separately!</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: EMAIL -->
+<div class="slide" id="s8">
+  <div class="badge blue">BONUS</div>
+  <h2>Get a Professional <span class="grad-blue">Email Address 📧</span></h2>
+  <p style="margin-bottom:20px;">Instead of gmail.com, use <strong style="color:#fff;">hello@yourwebsite.com</strong></p>
+  <div class="grid-2">
+    <div>
+      <div class="step">
+        <div class="step-num blue">1</div>
+        <div><h3>GoDaddy Professional Email (Free!)</h3><p>When you buy a domain from GoDaddy, they offer a free professional email via Titan Mail</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num blue">2</div>
+        <div><h3>Setup your email</h3><p>Go to GoDaddy → Email & Office → Create email like hello@yourdomain.com</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num blue">3</div>
+        <div><h3>Access your inbox</h3><p>Login at secureserver.titan.email or download the Titan app on your phone</p></div>
+      </div>
+    </div>
+    <div class="card blue-card">
+      <h3 style="color:var(--blue);margin-bottom:15px;">Free Email Options</h3>
+      <table>
+        <tr><th>Service</th><th>Price</th><th>How</th></tr>
+        <tr><td>GoDaddy + Titan</td><td>FREE (1yr)</td><td>Included with domain</td></tr>
+        <tr><td>Zoho Mail</td><td>FREE</td><td>zoho.com/mail</td></tr>
+        <tr><td>Gmail (G Suite)</td><td>₹125/mo</td><td>Google Workspace</td></tr>
+      </table>
+      <div class="tip" style="margin-top:15px;"><p>💡 A professional email like hello@tamizhkani.com makes your brand look credible and trustworthy!</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: CONTACT FORM -->
+<div class="slide" id="s9">
+  <div class="badge purple">BONUS</div>
+  <h2>Add a Working <span class="grad-blue">Contact Form</span></h2>
+  <div class="grid-2">
+    <div>
+      <p style="margin-bottom:15px;">Use Netlify Forms — no backend needed, completely free!</p>
+      <div class="code">&lt;form name="contact" <span style="color:#FFD700;">netlify</span>&gt;<br>&nbsp;&nbsp;&lt;input type="hidden" name="form-name" value="contact"/&gt;<br>&nbsp;&nbsp;&lt;input type="text" name="name" placeholder="Your Name"/&gt;<br>&nbsp;&nbsp;&lt;input type="email" name="email" placeholder="Your Email"/&gt;<br>&nbsp;&nbsp;&lt;textarea name="message"&gt;&lt;/textarea&gt;<br>&nbsp;&nbsp;&lt;button type="submit"&gt;Send&lt;/button&gt;<br>&lt;/form&gt;</div>
+      <div class="warn" style="margin-top:10px;"><p>⚠️ The magic is the <strong>netlify</strong> attribute in the form tag! That's all you need.</p></div>
+    </div>
+    <div>
+      <div class="step">
+        <div class="step-num purple">1</div>
+        <div><h3>Add netlify attribute to form</h3><p>Just add the word "netlify" inside your &lt;form&gt; tag</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num purple">2</div>
+        <div><h3>Deploy to Netlify</h3><p>Netlify auto-detects the form when you upload your site</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num purple">3</div>
+        <div><h3>Enable Form Detection</h3><p>Go to Netlify → Forms → Enable form detection</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num purple">4</div>
+        <div><h3>View submissions</h3><p>All form submissions are stored in Netlify → Forms dashboard</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: GITHUB -->
+<div class="slide" id="s10">
+  <div class="badge gold">BONUS</div>
+  <h2>Use <span class="grad-gold">GitHub</span> for Your Project</h2>
+  <div class="grid-2">
+    <div>
+      <p style="margin-bottom:20px;">GitHub is the best place to store your code, host images, and distribute software downloads — all for FREE!</p>
+      <div class="step">
+        <div class="step-num gold">1</div>
+        <div><h3>Sign up at github.com</h3><p>Free account — no credit card needed</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num gold">2</div>
+        <div><h3>Create a Repository</h3><p>Click New → Name it → Make it Public → Create</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num gold">3</div>
+        <div><h3>Upload your files</h3><p>Add file → Upload files → Commit changes</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num gold">4</div>
+        <div><h3>Get Raw URL for images</h3><p>Click file → Click "Raw" → Copy URL → Use in your website</p></div>
+      </div>
+    </div>
+    <div class="card gold-card">
+      <h3 style="color:var(--gold);margin-bottom:15px;">What to use GitHub for</h3>
+      <table>
+        <tr><th>Use Case</th><th>How</th></tr>
+        <tr><td>Host images</td><td>Upload → Raw URL</td></tr>
+        <tr><td>Software downloads</td><td>GitHub Releases</td></tr>
+        <tr><td>Share code</td><td>Public repository</td></tr>
+        <tr><td>Version control</td><td>Track all changes</td></tr>
+        <tr><td>Collaboration</td><td>Invite contributors</td></tr>
+      </table>
+      <div class="tip" style="margin-top:15px;"><p>💡 Raw image URL format:<br>https://raw.githubusercontent.com/USERNAME/REPO/main/image.jpg</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: EARN MONEY -->
+<div class="slide" id="s11">
+  <div class="badge green">BONUS</div>
+  <h2>Earn Money from <span class="grad-green">Your Website 💰</span></h2>
+  <div class="grid-4">
+    <div class="card green-card">
+      <div class="icon">📢</div>
+      <h3>Google AdSense</h3>
+      <p>Place ads on your website. Earn per click/view. Sign up at adsense.google.com</p>
+    </div>
+    <div class="card blue-card">
+      <div class="icon">🛒</div>
+      <h3>Sell Products</h3>
+      <p>Sell software, ebooks, courses. Use Razorpay or PayPal for payments.</p>
+    </div>
+    <div class="card purple-card">
+      <div class="icon">🙏</div>
+      <h3>Donations</h3>
+      <p>Add "Buy Me a Coffee" or Razorpay donation button. Community will support!</p>
+    </div>
+    <div class="card gold-card">
+      <div class="icon">🤝</div>
+      <h3>Sponsorships</h3>
+      <p>Companies pay to advertise on your site once you have good traffic.</p>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:20px;">
+    <div class="tip"><p>💡 <strong>Best strategy:</strong> Free downloads → builds user base → Donations → immediate income → Premium features → long term income → AdSense → passive income</p></div>
+    <div class="warn"><p>⚡ <strong>GitHub Sponsors:</strong> If you open-source your project on GitHub, developers worldwide can sponsor your work monthly!</p></div>
+  </div>
+</div>
+
+<!-- SLIDE 12: SUMMARY -->
+<div class="slide final-bg" id="s12">
+  <div class="badge blue">SUMMARY</div>
+  <h2>Your Complete <span class="grad-blue">Website Checklist</span></h2>
+  <div class="grid-2">
+    <div>
+      <ul class="checklist">
+        <li>Build your website (HTML/CSS or AI)</li>
+        <li>Save as index.html in a folder</li>
+        <li>Buy domain from GoDaddy/Namecheap (~₹1000/yr)</li>
+        <li>Sign up on Netlify (Free)</li>
+        <li>Deploy by dragging folder to Netlify</li>
+        <li>Add domain in Netlify → Domain Management</li>
+        <li>Add A record (75.2.60.5) in GoDaddy DNS</li>
+        <li>Add CNAME (www → your-site.netlify.app)</li>
+        <li>Provision SSL Certificate in Netlify</li>
+        <li>Set up professional email (hello@yourdomain.com)</li>
+        <li>Add contact form with netlify attribute</li>
+        <li>Upload assets to GitHub</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:15px;">
+        <h3 style="color:var(--gold);margin-bottom:10px;">💰 Total Cost Breakdown</h3>
+        <table>
+          <tr><th>Item</th><th>Cost</th></tr>
+          <tr><td>Domain (.com)</td><td>~₹1000/year</td></tr>
+          <tr><td>Netlify Hosting</td><td>FREE ✅</td></tr>
+          <tr><td>SSL Certificate</td><td>FREE ✅</td></tr>
+          <tr><td>Professional Email</td><td>FREE (1yr) ✅</td></tr>
+          <tr><td>GitHub</td><td>FREE ✅</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>~₹1000/year</strong></td></tr>
+        </table>
+      </div>
+      <div class="tip"><p>🎉 Built with this guide: <strong style="color:#fff;">tamizhkani.com</strong> — Tamil software products website, live and running!</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button onclick="goTo(1)">Intro</button>
+  <button onclick="prev()">◀ Prev</button>
+  <button onclick="next()">Next ▶</button>
+  <button onclick="goTo(12)">Summary</button>
+</div>
+
+<script>
+  let cur = 1, total = 12;
+
+  function show(n){
+    document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+    document.getElementById('s'+n).classList.add('active');
+    document.getElementById('slideCount').textContent = n + ' / ' + total;
+    document.getElementById('progress').style.width = (n/total*100) + '%';
+    cur = n;
+  }
+
+  function next(){if(cur<total)show(cur+1);}
+  function prev(){if(cur>1)show(cur-1);}
+  function goTo(n){show(n);}
+
+  // Keyboard navigation
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')next();
+    if(e.key==='ArrowLeft')prev();
+  });
+</script>
+</body>
+</html>
